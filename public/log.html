@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Crear Cuenta / Login</title>
+  <link rel="stylesheet" href="css/log.css">
+</head>
+<body>
+  <div class="container">
+    <div class="logo-container">
+      <img src="img/wewelcom_logo.jpg" alt="Logo" />
+    </div>
+
+    <div class="tabs">
+      <div class="tab active" onclick="showForm('register')">REGÍSTRATE</div>
+      <div class="tab" onclick="showForm('login')">INICIA SESIÓN</div>
+    </div>
+
+    <form id="register-form" class="active">
+      <label for="register-email">Email</label>
+      <input type="email" id="register-email" required>
+
+      <label for="register-password">Contraseña</label>
+      <input type="password" id="register-password" required>
+
+      <button type="submit">ACEPTAR</button>
+    </form>
+
+    <form id="login-form">
+      <label for="login-email">Email</label>
+      <input type="email" id="login-email" required>
+
+      <label for="login-password">Contraseña</label>
+      <input type="password" id="login-password" required>
+
+      <div class="remember">
+        <input type="checkbox" id="remember">
+        <label for="remember">Recuérdame</label>
+      </div>
+
+      <div class="forgot">
+        <a href="#">¿Has olvidado tu contraseña?</a>
+      </div>
+
+      <button type="submit">ACEPTAR</button>
+    </form>
+  </div>
+
+  <script>
+    const tabs = document.querySelectorAll('.tab');
+    const forms = {
+      login: document.getElementById('login-form'),
+      register: document.getElementById('register-form')
+    };
+
+    function showForm(type) {
+      tabs.forEach(t => t.classList.remove('active'));
+      document.querySelector(`.tab[onclick*="${type}"]`).classList.add('active');
+
+      for (const f in forms) {
+        forms[f].classList.remove('active');
+      }
+      forms[type].classList.add('active');
+    }
+
+    forms.login.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+
+      try {
+        const res = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          alert('Login correcto');
+        
+          location.href = 'rest.html'; // Cambia por la ruta correcta después del login
+        } else {
+          alert(data.message || 'Error al iniciar sesión');
+        }
+      } catch (error) {
+        alert('Error en la conexión: ' + error.message);
+      }
+    });
+
+    forms.register.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('register-email').value;
+      const password = document.getElementById('register-password').value;
+
+      try {
+        const res = await fetch('/api/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+
+        alert(data.message || (res.ok ? 'Registro exitoso' : 'Error al registrar'));
+        if (res.ok) {
+          location.href = 'log.html'; 
+        }
+      } catch (error) {
+        alert('Error en la conexión: ' + error.message);
+      }
+    });
+  </script>
+</body>
+</html>

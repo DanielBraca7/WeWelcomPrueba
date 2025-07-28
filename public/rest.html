@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gestión de Restaurantes</title>
+  <link rel="stylesheet" href="css/rest.css">
+</head>
+<body>
+  <h1>Lista de restaurantes</h1>
+
+  <table id="tablaRestaurantes">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Dirección</th>
+        <th>Teléfono</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <div id="botones">
+    <button class="boton" onclick="abrirFormulario(true)">Añadir</button>
+    <button class="boton" onclick="editarSeleccionado()">Editar</button>
+    <button class="boton" onclick="borrarSeleccionado()">Borrar</button>
+  </div>
+
+  <div id="overlay" onclick="cerrarFormulario()"></div>
+
+  <div id="formulario">
+    <h2 id="formTitulo">Añadir Restaurante</h2>
+    <input type="text" id="nombre" placeholder="Nombre" />
+    <input type="text" id="direccion" placeholder="Dirección" />
+    <input type="text" id="telefono" placeholder="Teléfono" />
+
+    <div id="formularioBotones">
+      <button class="boton" onclick="guardar()">Guardar</button>
+      <button class="boton" onclick="cerrarFormulario()">Cancelar</button>
+    </div>
+  </div>
+
+  <script>
+    const tabla = document.querySelector("#tablaRestaurantes tbody");
+    let restaurantes = [];
+    let editIndex = null;
+    let selectedRow = null;
+
+    const API_URL = '/api/restaurantes';
+
+    async function obtenerRestaurantes() {
+      try {
+        const res = await fetch(API_URL);
+        const data = await res.json();
+        console.log('Respuesta del backend:', data);
+
+        if (Array.isArray(data.member)) {
+          restaurantes = data.member;
+        } else {
+          throw new Error("Formato inesperado de la respuesta");
+        }
+
+        renderizarTabla();
+      } catch (error) {
+        alert("Error al obtener los restaurantes: " + error.message);
+      }
+    }
+
+    function renderizarTabla() {
+      tabla.innerHTML = "";
+      restaurantes.forEach((r, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `<td>${r.nombre}</td><td>${r.direccion}</td><td>${r.telefono}</td>`;
+        row.onclick = () => seleccionarFila(index, row);
+
+        if (index === editIndex) {
+          row.classList.add('selected');
+          selectedRow = row;
+        } else {
+          row.classList.remove('selected');
+        }
+
+        tabla.appendChild(row);
+      });
+    }
+
+    function seleccionarFila(index, row) {
+      if (selectedRow) selectedRow.classList.remove('selected');
+      selectedRow = row;
+      selectedRow.classList.add('selected');
+      editIndex = index;
+    }
+
+    function abrirFormulario(nuevo = true) {
+      document.getElementById("formulario").style.display = "block";
+      document.getElementById("overlay").style.display = "block";
+
+      if (!nuevo && editIndex != null) {
+        document.getElementById("formTitulo").innerText = "Editar Restaurante";
+        const r = restaurantes[editIndex];
+        document.getElementById("nombre").value = r.nombre;
+        document.getElementById("direccion").value = r.direccion;
+        document.getElementById("telefono").value = r.telefono;
+      } else {
+        document.getElementById("formTitulo").innerText = "Añadir Restaurante";
+        document.getElementById("nombre").value = "";
+        document.getElementById("direccion").value = "";
+        document.getElementById("telefono").value = "";
+        editIndex = null;
+        if (selectedRow) {
+          selectedRow.classList.remove('selected');
+          selectedRow = null;
+        }
+      }
+    }
+
+    function cerrarFormulario() {
+      document.getElementById("formulario").style.display = "none";
+      document.getElementById("overlay").style.display = "none";
+    }
+
+    async function guardar() {
+      const nombre = document.getElementById("nombre").value.trim();
+      const direccion = document.getElementById("direccion").value.trim();
+      const telefono = document.getElementById("telefono").value.trim();
+
+      if (!nombre || !direccion || !telefono) {
+        alert("Todos los campos son obligatorios");
+        return;
+      }
+
+      try {
+        if (editIndex != null) {
+          const id = restaurantes[editIndex].id;
+          await fetch(`${API_URL}/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nombre, direccion, telefono })
+          });
+        } else {
+          await fetch(API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nombre, direccion, telefono })
+          });
+        }
+        cerrarFormulario();
+        obtenerRestaurantes();
+      } catch (error) {
+        alert("Error al guardar el restaurante: " + error.message);
+      }
+    }
+
+    function editarSeleccionado() {
+      if (editIndex == null) {
+        alert("Selecciona una fila para editar.");
+        return;
+      }
+      abrirFormulario(false);
+    }
+
+    async function borrarSeleccionado() {
+      if (editIndex == null) {
+        alert("Selecciona una fila para borrar.");
+        return;
+      }
+      if (!confirm("¿Estás seguro de eliminar este restaurante?")) return;
+
+      try {
+        const id = restaurantes[editIndex].id;
+        await fetch(`${API_URL}/${id}`, {
+          method: 'DELETE'
+        });
+        editIndex = null;
+        if (selectedRow) {
+          selectedRow.classList.remove('selected');
+          selectedRow = null;
+        }
+        obtenerRestaurantes();
+      } catch (error) {
+        alert("Error al borrar el restaurante: " + error.message);
+      }
+    }
+
+    window.onload = obtenerRestaurantes;
+  </script>
+</body>
+</html>

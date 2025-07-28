@@ -1,0 +1,107 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #232148;
+  color: white;
+  margin: 0;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  color: #4fdadf;
+}
+
+table {
+  width: 90%;
+  border-collapse: collapse;
+  margin-top: 2rem;
+}
+
+th, td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #4fdadf;
+}
+
+th {
+  background-color: #4fdadf;
+  color: black;
+}
+
+tr:hover {
+  background-color: #333;
+  cursor: pointer;
+}
+
+tr.selected {
+  background-color: #342e7d !important;
+  color: white;
+}
+
+#botones {
+  margin-top: 3rem;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+button.boton {
+  background-color: #4fdadf;
+  color: black;
+  padding: 0.7rem 1.2rem;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  flex: 1;
+  max-width: 150px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+button.boton:hover {
+  background-color: #3bb8b4;
+}
+
+#formulario {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #1a1833;
+  padding: 2rem;
+  border: 2px solid #4fdadf;
+  border-radius: 10px;
+  z-index: 10;
+  width: 400px;
+  color: white;
+}
+
+#formulario input {
+  width: 100%;
+  padding: 0.7rem;
+  margin-bottom: 1rem;
+  border: none;
+  font-size: 1rem;
+  border-radius: 4px;
+}
+
+#formularioBotones {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+#overlay {
+  display: none;
+  position: fixed;
+  top: 0; 
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 5;
+}
