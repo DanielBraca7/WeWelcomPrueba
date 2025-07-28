@@ -9,6 +9,7 @@ return [
     false, // $matchHost
     [ // $staticRoutes
         '/api/doc.json' => [[['_route' => 'app.swagger', '_controller' => 'nelmio_api_doc.controller.swagger'], null, ['GET' => 0], null, false, false, null]],
+        '/' => [[['_route' => 'homepage', '_controller' => 'App\\Controller\\HomeController::index'], null, null, null, false, false, null]],
         '/api/register' => [[['_route' => 'usuario_register', '_controller' => 'App\\Controller\\UsuarioController::register'], null, ['POST' => 0], null, false, false, null]],
         '/api/login' => [[['_route' => 'usuario_login', '_controller' => 'App\\Controller\\UsuarioController::login'], null, ['POST' => 0], null, false, false, null]],
     ],

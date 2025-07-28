@@ -410,6 +410,13 @@
       <tag name="controller.service_arguments"/>
       <tag name="routing.route_loader"/>
     </service>
+    <service id="App\Controller\HomeController" class="App\Controller\HomeController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="container.service_subscriber"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.ZyP9f7K.App\Controller\HomeController"/>
+      </call>
+    </service>
     <service id="App\Controller\RestauranteController" class="App\Controller\RestauranteController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
       <tag name="container.service_subscriber"/>
@@ -6121,6 +6128,9 @@
     <service id="nelmio_api_doc.describers.api_platform.openapi" class="ApiPlatform\OpenApi\OpenApi">
       <factory service="api_platform.openapi.factory" method="__invoke"/>
     </service>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\HomeController" class="App\Controller\HomeController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\HomeController" class="App\Controller\HomeController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\HomeController" class="App\Controller\HomeController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\RestauranteController" class="App\Controller\RestauranteController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\RestauranteController" class="App\Controller\RestauranteController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\RestauranteController" class="App\Controller\RestauranteController" autowire="true" autoconfigure="true" abstract="true"/>
@@ -6960,6 +6970,12 @@
         <argument key="web_link.http_header_serializer" type="service_closure" id="web_link.http_header_serializer" on-invalid="ignore"/>
       </argument>
     </service>
+    <service id=".service_locator.ZyP9f7K.App\Controller\HomeController" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\HomeController"/>
+      <argument>App\Controller\HomeController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.ZyP9f7K" method="withContext"/>
+    </service>
     <service id=".service_locator.ZyP9f7K.App\Controller\RestauranteController" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator_context" id="App\Controller\RestauranteController"/>
       <argument>App\Controller\RestauranteController</argument>
@@ -7165,6 +7181,7 @@
       <call method="allowControllers">
         <argument type="collection">
           <argument>App\Kernel</argument>
+          <argument>App\Controller\HomeController</argument>
           <argument>App\Controller\RestauranteController</argument>
           <argument>App\Controller\UsuarioController</argument>
           <argument>Doctrine\Bundle\DoctrineBundle\Controller\ProfilerController</argument>

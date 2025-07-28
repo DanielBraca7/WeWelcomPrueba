@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'symfony/skeleton',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => null,
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => '76d6885678907e4776211d6d95658633d54888af',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -884,9 +884,9 @@
             ),
         ),
         'symfony/skeleton' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => null,
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '76d6885678907e4776211d6d95658633d54888af',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
