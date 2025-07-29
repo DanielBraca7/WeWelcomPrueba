@@ -2,15 +2,11 @@
 
 API RESTful para la gestión de restaurantes, desarrollada con Symfony 7 y API Platform.
 
----
-
 ## Descripción
 
-Este proyecto es una API RESTful que permite gestionar una base de datos de restaurantes, con funcionalidades para crear, listar, actualizar y eliminar restaurantes.
+WeWelcomPrueba es una API RESTful que permite gestionar una base de datos de restaurantes, con funcionalidades para crear, listar, actualizar y eliminar registros de restaurantes. Incluye un frontend básico con HTML, CSS y JavaScript para interactuar con la API.
 
----
-
-## Tecnologías
+## Tecnologías utilizadas
 
 - PHP 8+  
 - Symfony 7  
@@ -20,46 +16,50 @@ Este proyecto es una API RESTful que permite gestionar una base de datos de rest
 
 ## Instalación
 
-1. Clonar el repositorio:  
-   git clone https://github.com/DanielBraca7/WeWelcomPrueba.git
+Sigue estos pasos para poner en marcha el proyecto localmente:
+
+1. Clona el repositorio:
+
+   git clone https://github.com/DanielBraca7/WeWelcomPrueba.git  
    cd WeWelcomPrueba
 
-2.Instalar dependencias PHP:
+2. Instala las dependencias de PHP con Composer:
+
    composer install
-   
-3.Configurar variables de entorno en .env.local
 
-DATABASE_URL="mysql://root:@127.0.0.1:3306/DBWWelcome"
+3. Configura las variables de entorno:
 
-4.Importar base de datos: 
-Abre phpMyAdmin y accede a tu servidor MySQL.
-Crea una nueva base de datos si lo deseas.
-Selecciona la base de datos donde quieres importar los datos.
-Ve a la pestaña Importar y selecciona el archivo .sql proporcionado en la carpeta documentos.
+   Crea un archivo `.env.local` basado en `.env` y ajusta la conexión a la base de datos, por ejemplo:
 
-Haz clic en Continuar para iniciar la importación.
+   DATABASE_URL="mysql://root:@127.0.0.1:3306/DBWWelcome"
 
-Usuario por defecto
-Correo: test@gmail.com
+4. Importa la base de datos:
 
-Contraseña: 1234
+   - Abre phpMyAdmin (u otra herramienta de gestión MySQL).
+   - Crea una base de datos llamada `DBWWelcome` (o el nombre que hayas puesto en `DATABASE_URL`).
+   - Importa el archivo `.sql` que encontrarás en la carpeta `documentos` del proyecto.
 
-Puedes registrar nuevos usuarios a través del endpoint de registro.
+5. Usuario por defecto para pruebas:
+
+   - Correo: test@gmail.com  
+   - Contraseña: 1234
+
+   También puedes registrar nuevos usuarios mediante el endpoint de registro.
 
 ## Uso
-Ejecutar por terminal desde la raiz del proyecto  
-php -S localhost:8000 -t public
 
-La aplicación será visible en tu navegador en la siguiente URL:
-http://localhost:8000 
+Para ejecutar la aplicación localmente, abre una terminal en la raíz del proyecto y ejecuta:
 
-En caso de algún fallo, puedes intentar acceder directamente al archivo HTML en:
-http://localhost:8000/rest.html
+   php -S localhost:8000 -t public
 
-Documentación API disponible en:
-http://localhost:8000/api/docs
+Luego, abre tu navegador y visita:
+
+- Aplicación frontend: http://localhost:8000  
+- En caso de problemas, intenta acceder directamente al archivo HTML: http://localhost:8000/rest.html  
+- Documentación de la API (Swagger UI): http://localhost:8000/api/docs  
 
 ## Contacto
-Para dudas o sugerencias, contactame a bracadaniel07@outlook.com
 
+Si tienes dudas o sugerencias, no dudes en contactarme:
 
+- Email: bracadaniel07@outlook.com
